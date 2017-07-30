@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Practices.Unity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,8 +9,29 @@ namespace IOC
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
+            //var objPerson = new Person(42, "David", 6, "Ben");
+            var objIOC = new IOC();
+            objIOC.FactoryMethod();
+            Console.WriteLine(objIOC);
+
+            var client = new Client();
+            client.Start(new Service());
+
+
+            using (IUnityContainer unitycontainer = new UnityContainer())
+            {
+                unitycontainer.RegisterType<ICompany, Company>();
+
+                var emp = unitycontainer.Resolve<Employee>();
+                emp.DisplaySalary();
+
+
+                //Console.ReadLine();
+            }
+            Console.ReadLine();
+
         }
     }
 }
